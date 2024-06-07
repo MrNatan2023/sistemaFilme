@@ -1,4 +1,7 @@
 import db.DB;
+import entities.Filme;
+import entities.dao.FilmeDao;
+import jdbc.FilmeDaoJDBC;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -6,6 +9,8 @@ import java.text.ParseException;
 public class Main {
     public static void main(String[] args) {
 
+        FilmeDao filmeDao = new FilmeDaoJDBC(DB.getConnection());
+        System.out.println(filmeDao.findById(1));
 
     }
     public static void adicionar(){

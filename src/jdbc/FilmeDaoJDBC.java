@@ -11,6 +11,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class FilmeDaoJDBC implements FilmeDao {
+    private Connection conn;
+
+    public FilmeDaoJDBC(Connection conn){
+        this.conn = conn;
+    }
+    public FilmeDaoJDBC(){
+
+    }
     @Override
     public void insert(Filme filme) {
 
@@ -27,37 +35,32 @@ public class FilmeDaoJDBC implements FilmeDao {
     }
 
     @Override
-    public FilmeDao findById(Integer id) {
+    public Filme findById(Integer id) {
         Connection conn = null;
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             conn = DB.getConnection();
-
-            st = conn.prepareStatement(
-                    "select f.* from filme f"
-                    + "where f.id = ?"
-            );
+            st = conn.prepareStatement("SELECT f.* FROM filme f WHERE f.id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
-
-            while (rs.next()) {
+            if (rs.next()) {
                 Filme filme = new Filme();
                 filme.setId(rs.getInt("id"));
                 filme.setTitulo(rs.getString("titulo"));
                 filme.setDuracao(rs.getInt("duracao"));
                 filme.setAnoLancamento(rs.getInt("ano_lancamento"));
-                return (FilmeDao) filme;
+                return filme;
             }
-            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         } finally {
             DB.closeResultSet(rs);
             DB.closeStatement(st);
+            DB.closeConnection();
         }
+        return null;
     }
 
     @Override
