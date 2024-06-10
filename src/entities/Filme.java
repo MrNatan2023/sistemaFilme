@@ -1,7 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.Connection;
 
 public class Filme implements Serializable {
     private int id;
@@ -11,15 +10,17 @@ public class Filme implements Serializable {
 
     public Filme() {}
 
+    public Filme(String titulo, int duracao, int anoLancamento) {
+        this.titulo = titulo;
+        this.duracao = duracao;
+        this.anoLancamento = anoLancamento;
+    }
     public Filme(int id, String titulo, int duracao, int anoLancamento) {
         this.id = id;
         this.titulo = titulo;
         this.duracao = duracao;
         this.anoLancamento = anoLancamento;
     }
-
-
-
     public int getId() {
         return id;
     }
@@ -51,13 +52,13 @@ public class Filme implements Serializable {
     public void setAnoLancamento(int anoLancamento) {
         this.anoLancamento = anoLancamento;
     }
+
     @Override
     public String toString() {
-        return "Filme{" +
-                "id=" + id +
+        return "id=" + id +
                 ", titulo='" + titulo + '\'' +
                 ", duracao=" + duracao +
-                ", anoLancamento=" + anoLancamento +
-                '}';
+                ", anoLancamento=" + anoLancamento
+                ;
     }
 }
