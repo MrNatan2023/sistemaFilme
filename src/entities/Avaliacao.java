@@ -18,6 +18,12 @@ public class Avaliacao implements Serializable {
         this.nota = nota;
         this.comentario = comentario;
     }
+    public Avaliacao(int idUsuario, int idFilme, int nota, String comentario) {
+        this.idUsuario = idUsuario;
+        this.idFilme = idFilme;
+        this.nota = nota;
+        this.comentario = comentario;
+    }
 
     public int getId() {
         return id;

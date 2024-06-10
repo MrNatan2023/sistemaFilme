@@ -14,6 +14,10 @@ public class Diretor implements Serializable {
         this.nome = nome;
         this.idFilme = idFilme;
     }
+    public Diretor(String nome, int idFilme) {
+        this.nome = nome;
+        this.idFilme = idFilme;
+    }
 
     public int getId() {
         return id;

@@ -15,6 +15,11 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public Usuario(String nome, String email) {
+        this.nome = nome;
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }
@@ -37,5 +42,11 @@ public class Usuario implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email=" + email;
     }
 }
