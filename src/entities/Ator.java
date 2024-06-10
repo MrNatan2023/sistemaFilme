@@ -14,6 +14,10 @@ public class Ator implements Serializable {
         this.nome = nome;
         this.idFilme = idFilme;
     }
+    public Ator(String nome, int idFilme) {
+        this.nome = nome;
+        this.idFilme = idFilme;
+    }
 
     public int getId() {
         return id;
