@@ -15,7 +15,7 @@ public class Main {
 
         try {
             conn.setAutoCommit(false);
-            long startTime = System.currentTimeMillis();
+            long inicio = System.currentTimeMillis();
 
             for (int i = 0; i < 10000; i++) {
                 Filme filme = new Filme("Filme " + i, 120, 1996);
@@ -23,9 +23,9 @@ public class Main {
             }
 
             conn.commit();
-            long endTime = System.currentTimeMillis();
-            long totalTime = endTime - startTime;
-            System.out.println("Tempo com transação: " + totalTime / 1000.0 + " segundos");
+            long fim = System.currentTimeMillis();
+            long total = fim - inicio;
+            System.out.println("Tempo com transação: " + total / 1000.0 + " segundos");
         } catch (SQLException e) {
             try {
                 conn.rollback();
