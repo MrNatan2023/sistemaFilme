@@ -1,6 +1,10 @@
 import db.DB;
+import entities.Ator;
 import entities.Diretor;
+import entities.Genero;
+import jdbc.AtorDaoJDBC;
 import jdbc.DiretorDaoJDBC;
+import jdbc.GeneroDaoJDBC;
 
 
 import java.sql.*;
@@ -10,20 +14,20 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Connection conn = DB.getConnection();
-        DiretorDaoJDBC diretorDao = new DiretorDaoJDBC(conn);
-
+        AtorDaoJDBC generoDao = new AtorDaoJDBC(conn);
 
         try {
             conn.setAutoCommit(false);
             long inicio = System.currentTimeMillis();
 
-            List<Diretor> lista = diretorDao.findAll();
-            for (Diretor diretor : lista){
-                System.out.println(diretor);
+            Ator genero = new Ator("Uma Thurman",3);
+            generoDao.insert(genero);
+
+            List<Ator> lista = generoDao.findAll();
+            for (Ator genero1 : lista){
+                System.out.println(genero1);
             }
 
-            diretorDao.findAll();
-            diretorDao.deleteById(2);
             System.out.println();
 
             conn.commit();

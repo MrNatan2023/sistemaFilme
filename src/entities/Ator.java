@@ -42,4 +42,11 @@ public class Ator implements Serializable {
     public void setIdFilme(int idFilme) {
         this.idFilme = idFilme;
     }
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", id_filme=" + idFilme;
+    }
 }

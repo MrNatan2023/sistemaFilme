@@ -64,4 +64,13 @@ public class Avaliacao implements Serializable {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", id_usuario=" + idUsuario +
+                ", id_filme=" + idFilme +
+                ", nota=" + nota +
+                ", comentario='" + comentario;
+    }
 }

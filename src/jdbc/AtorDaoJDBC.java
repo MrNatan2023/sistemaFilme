@@ -2,60 +2,56 @@ package jdbc;
 
 import db.DB;
 import db.DbException;
-import entities.Filme;
-import entities.dao.FilmeDao;
+import entities.Ator;
+import entities.dao.AtorDao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmeDaoJDBC implements FilmeDao {
+public class AtorDaoJDBC implements AtorDao {
     private Connection conn;
 
-    public FilmeDaoJDBC(Connection conn){
+    public AtorDaoJDBC(Connection conn) {
         this.conn = conn;
     }
-    public FilmeDaoJDBC(){
 
-    }
     @Override
-    public void insert(Filme filme) {
+    public void insert(Ator ator) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO filme (titulo, duracao, ano_lancamento) VALUES (?, ?, ?)",
+                    "INSERT INTO ator (nome, id_filme) VALUES (?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
-            st.setString(1, filme.getTitulo());
-            st.setInt(2, filme.getDuracao());
-            st.setInt(3, filme.getAnoLancamento());
+            st.setString(1, ator.getNome());
+            st.setInt(2, ator.getIdFilme());
 
-            int rows =  st.executeUpdate();
+            int rows = st.executeUpdate();
             System.out.println(rows);
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(st);
         }
-
     }
 
     @Override
-    public void update(Filme filme) {
+    public void update(Ator ator) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "UPDATE filme SET titulo = ?, duracao = ?, ano_lancamento = ? WHERE id = ?"
+                    "UPDATE ator SET nome = ?, id_filme = ? WHERE id = ?"
             );
-            st.setString(1, filme.getTitulo());
-            st.setInt(2, filme.getDuracao());
-            st.setInt(3, filme.getAnoLancamento());
-            st.setInt(4, filme.getId());
-            int rows =  st.executeUpdate();
+            st.setString(1, ator.getNome());
+            st.setInt(2, ator.getIdFilme());
+            st.setInt(3, ator.getId());
+
+            int rows = st.executeUpdate();
             System.out.println(rows);
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
-        }finally {
+        } finally {
             DB.closeStatement(st);
         }
     }
@@ -64,11 +60,11 @@ public class FilmeDaoJDBC implements FilmeDao {
     public void deleteById(Integer id) {
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement("delete from filme where id = ?");
+            st = conn.prepareStatement("DELETE FROM ator WHERE id = ?");
             st.setInt(1, id);
             int rows = st.executeUpdate();
             System.out.println(rows);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(st);
@@ -76,22 +72,20 @@ public class FilmeDaoJDBC implements FilmeDao {
     }
 
     @Override
-    public Filme findById(Integer id) {
+    public Ator findById(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = conn.prepareStatement("SELECT f.* FROM filme f WHERE f.id = ?");
+            st = conn.prepareStatement("SELECT a.* FROM ator a WHERE a.id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                Filme filme = new Filme();
-                filme.setId(rs.getInt("id"));
-                filme.setTitulo(rs.getString("titulo"));
-                filme.setDuracao(rs.getInt("duracao"));
-                filme.setAnoLancamento(rs.getInt("ano_lancamento"));
-                return filme;
+                Ator ator = new Ator();
+                ator.setId(rs.getInt("id"));
+                ator.setNome(rs.getString("nome"));
+                ator.setIdFilme(rs.getInt("id_filme"));
+                return ator;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -102,21 +96,20 @@ public class FilmeDaoJDBC implements FilmeDao {
     }
 
     @Override
-    public List<Filme> findAll() {
+    public List<Ator> findAll() {
         PreparedStatement st = null;
         ResultSet rs = null;
-        List<Filme> list = new ArrayList<>();
+        List<Ator> list = new ArrayList<>();
         try {
-            st = conn.prepareStatement("SELECT * FROM filme");
+            st = conn.prepareStatement("SELECT * FROM ator");
             rs = st.executeQuery();
 
             while (rs.next()) {
-                Filme filme = new Filme();
-                filme.setId(rs.getInt("id"));
-                filme.setTitulo(rs.getString("titulo"));
-                filme.setDuracao(rs.getInt("duracao"));
-                filme.setAnoLancamento(rs.getInt("ano_lancamento"));
-                list.add(filme);
+                Ator ator = new Ator();
+                ator.setId(rs.getInt("id"));
+                ator.setNome(rs.getString("nome"));
+                ator.setIdFilme(rs.getInt("id_filme"));
+                list.add(ator);
             }
             return list;
         } catch (SQLException e) {
